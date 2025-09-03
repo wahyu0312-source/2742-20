@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>出荷検査成績書 2742-20 MU6300V</title>
+  <title>出荷検査成績書 2742-20 MU6300V（X軸 APC側）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -23,15 +23,12 @@
     /* ===== table base ===== */
     table { width:100%; border-collapse:collapse; margin-bottom:4mm; }
     th, td { border:.3mm solid #333; padding:1.2mm 1mm; text-align:center; background:#fff; vertical-align:middle; }
-    /* header cells now also white (no gray) */
     th { background:#fff; }
-    /* section label juga putih */
     .section-label { text-align:left; font-weight:bold; background:#fff; }
 
     .header-table td, .header-table th { white-space:nowrap; word-break:keep-all; }
     .header-table input { min-width:0; }
 
-    /* util: paksa isi rata kiri di sel tertentu */
     .ta-left { text-align:left !important; }
 
     .td-measure { padding:0 !important; }
@@ -47,7 +44,7 @@
     .stamp-label { font-size:3mm; margin-bottom:1mm; text-align:center; }
     .signature-box {
       width:15mm; height:15mm; border:.3mm solid #333; border-radius:2mm;
-      background:#fff; /* putihkan kotak stempel */
+      background:#fff;
       display:flex; align-items:center; justify-content:center; overflow:hidden;
     }
     .signature-box img { width:9mm; height:9mm; object-fit:contain; }
@@ -86,7 +83,6 @@
     .serial-wrap { display:grid; grid-template-columns:auto 1fr; align-items:center; gap:1mm; }
     .serial-prefix { white-space:nowrap; }
 
-    /* highlight soft-required tetap (untuk input guide saat layar) */
     .soft-required.pending { background-color:#06e8f8; box-shadow:inset 0 0 0 1px rgba(242,201,76,.25); transition:background-color .25s ease; }
     @media print { .soft-required.pending { background:transparent !important; box-shadow:none !important; } }
   </style>
@@ -186,14 +182,40 @@
         <tr><td>ワイパーの隙間</td><td>ワイパー材 t=0.05にて確認</td><td><span class="judge-fixed">合</span></td></tr>
         <tr><td>ネジ・ローラーの確認</td><td>締め・位置の確認</td><td><span class="judge-fixed">合</span></td></tr>
         <tr><td>外観検査</td><td>キズ・バリ・表面処理の目視確認</td><td><span class="judge-fixed">合</span></td></tr>
-         <tr><td>シュー部分</td><td>シュー接着確認</td><td><span class="judge-fixed">合</span></td></tr>
+        <tr><td>シュー部分</td><td>シュー接着確認</td><td><span class="judge-fixed">合</span></td></tr>
       </table>
 
       <table>
         <tr><th>項目</th><th>基準値</th><th>測定値</th></tr>
-        <tr><td>伸長時寸法</td><td>2212.4 mm以上</td><td class="td-measure"><div class="td-measure-grid"><input type="text" inputmode="numeric" name="b_length" placeholder=">=2212.4" data-min="2212.4" class="soft-required" data-soft-required="1" /><span>mm</span></div></td></tr>
-        <tr><td>収縮時寸法</td><td>732.4 mm以下</td><td class="td-measure"><div class="td-measure-grid"><input type="text" inputmode="numeric" name="a_length" placeholder="0-732.4" data-min="0" data-max="732.4" class="soft-required" data-soft-required="1" /><span>mm</span></div></td></tr>
-        <tr><td>ストローク</td><td>1480 mm以上</td><td class="td-measure"><div class="td-measure-grid"><input type="text" inputmode="numeric" name="b_length" placeholder=">=1480" data-min="1480" class="soft-required" data-soft-required="1" /><span>mm</span></div></td></tr>
+        <!-- allow decimals on these two -->
+        <tr>
+          <td>伸長時寸法</td><td>2212.4 mm以上</td>
+          <td class="td-measure">
+            <div class="td-measure-grid">
+              <input type="text" inputmode="decimal" step="0.1" name="b_length" placeholder=">=2212.4" data-min="2212.4" class="soft-required" data-soft-required="1" />
+              <span>mm</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>収縮時寸法</td><td>732.4 mm以下</td>
+          <td class="td-measure">
+            <div class="td-measure-grid">
+              <input type="text" inputmode="decimal" step="0.1" name="a_length" placeholder="0-732.4" data-min="0" data-max="732.4" class="soft-required" data-soft-required="1" />
+              <span>mm</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>ストローク</td><td>1480 mm以上</td>
+          <td class="td-measure">
+            <div class="td-measure-grid">
+              <!-- fix duplicate name: use c_length -->
+              <input type="text" inputmode="numeric" name="c_length" placeholder=">=1480" data-min="1480" class="soft-required" data-soft-required="1" />
+              <span>mm</span>
+            </div>
+          </td>
+        </tr>
         <tr><td>初期摺動抵抗</td><td>24 kg以下</td><td class="td-measure"><div class="td-measure-grid"><input type="text" inputmode="decimal" step="1" name="start_resist" placeholder="0-24" data-min="0" data-max="24" class="soft-required" data-soft-required="1" /><span>kg</span></div></td></tr>
         <tr><td>中期摺動抵抗</td><td>24 kg以下</td><td class="td-measure"><div class="td-measure-grid"><input type="text" inputmode="decimal" step="1" name="mid_resist" placeholder="0-24" data-min="0" data-max="24" class="soft-required" data-soft-required="1" /><span>kg</span></div></td></tr>
         <tr><td>終期摺動抵抗</td><td>24 kg以下</td><td class="td-measure"><div class="td-measure-grid"><input type="text" inputmode="decimal" step="1" name="end_resist" placeholder="0-24" data-min="0" data-max="24" class="soft-required" data-soft-required="1" /><span>kg</span></div></td></tr>
@@ -219,7 +241,7 @@
             <option value="">- 印鑑選択 -</option>
             <option value="nakagawa.png">中川部長</option>
             <option value="李.png">李</option>
-            </select>
+          </select>
           <div class="stamp-label">検印</div>
           <div class="signature-box"><img id="stamp1" src="" alt=""></div>
         </div>
@@ -228,7 +250,7 @@
             <option value="">- 印鑑選択 -</option>
             <option value="李.png">李</option>
             <option value="中本.png">中本</option>
-            </select>
+          </select>
           <div class="stamp-label">検査印</div>
           <div class="signature-box"><img id="stamp2" src="" alt=""></div>
         </div>
@@ -351,10 +373,15 @@
       inp?.addEventListener('input', upd); upd();
     }
     function computePrefixFromZuban(z){
-  const m = String(z||'').match(/^(\d{4})/);
-  return m ? `${m[1]}-` : '';
-}
-    function applyPrefix(){ const z = getZuban(); const pref = computePrefixFromZuban(z); const span = document.querySelector('.serial-prefix'); if(span) span.textContent = pref; }
+      const m = String(z||'').match(/^(\d{4})/);
+      return m ? `${m[1]}-` : '';
+    }
+    function applyPrefix(){
+      const z = getZuban();
+      const pref = computePrefixFromZuban(z);
+      const span = document.querySelector('.serial-prefix');
+      if(span) span.textContent = pref || '2742-';
+    }
 
     // ====== SHARED COUNTER (GAS) ======
     async function apiGAS(body){
@@ -468,7 +495,7 @@
     async function serialExists(dir, prefix, numeric){
       if(!dir.entries) return false;
       const pattern = new RegExp(`_${prefix}0*${numeric}\\.pdf$`);
-      for await (const [name,handle] of dir.entries()){
+      for await (const [name] of dir.entries()){
         if(/\.pdf$/i.test(name) && pattern.test(name)) return name;
       }
       return false;
@@ -494,7 +521,7 @@
         }
 
         // Detect duplicate regardless of left padding
-        const rawPrefix = getSerialPrefix(); // ex: 'Y282520-'
+        const rawPrefix = getSerialPrefix(); // ex: '2742-'
         const suffixStr = (document.querySelector('input[name="serial_no_suffix"]').value || '').trim();
         const numeric = parseInt(suffixStr.replace(/^0+/,'') || '0', 10);
         const dupe = await serialExists(dir, sanitize(rawPrefix), numeric);
